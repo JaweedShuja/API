@@ -1,0 +1,51 @@
+import React,{Component} from 'react'
+import './style.css'
+class App extends Component{
+  constructor(){
+    super()
+    this.state ={
+      dataSource:[]
+    }
+    
+  }
+  componentDidMount(){
+    return fetch('https://restcountries.eu/rest/v2/all')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+        dataSource:responseJson
+      }, function(){
+
+      })
+    })
+    .catch((error) => {
+      alert(error.message)
+    })
+  }
+  render(){
+    return(
+      <div>
+        <table id="customers">
+            <tr>
+        <th>Country Name</th>
+        <th>Calling Code</th>
+        <th>Capital</th>
+        <th>Population</th>
+          </tr>
+          
+        {this.state.dataSource.map(data => 
+          <tr>
+            <td>{data.name}</td>
+            <td>{data.callingCodes}</td>
+            <td>{data.capital}</td>
+            <td>{data.population}</td>
+          </tr>
+          )}
+          
+        </table>
+      </div>
+    );
+  }
+}
+
+export default App
